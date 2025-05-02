@@ -23,8 +23,10 @@ const Index = () => {
             if (entry.target.classList.contains("skill-bar-container")) {
               const skillBar = entry.target.querySelector(".skill-bar");
               if (skillBar) {
-                const width = skillBar.style.width;
-                skillBar.style.setProperty('--width', width);
+                // Cast to HTMLElement to access style property
+                const skillBarElement = skillBar as HTMLElement;
+                const width = skillBarElement.style.width;
+                skillBarElement.style.setProperty('--width', width);
               }
             }
           }
