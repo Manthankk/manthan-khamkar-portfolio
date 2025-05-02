@@ -6,7 +6,6 @@ import HeroSection from "@/components/HeroSection";
 import AboutSection from "@/components/AboutSection";
 import ProjectsSection from "@/components/ProjectsSection";
 import ExperienceSection from "@/components/ExperienceSection";
-import BlogSection from "@/components/BlogSection";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
 import CookieConsent from "@/components/CookieConsent";
@@ -44,7 +43,6 @@ const Index = () => {
           <AboutSection />
           <ProjectsSection />
           <ExperienceSection />
-          <BlogSection />
           <ContactSection />
         </main>
         <Footer />

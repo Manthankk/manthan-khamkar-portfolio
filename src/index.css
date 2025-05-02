@@ -102,6 +102,31 @@
   .theme-transition {
     @apply transition-all duration-300;
   }
+  
+  .bg-grid-pattern {
+    background-image: radial-gradient(circle, #ccc 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+}
+
+/* Animations */
+@keyframes carousel {
+  0%, 26.66% {
+    transform: translateY(0);
+  }
+  33.33%, 60% {
+    transform: translateY(-100%);
+  }
+  66.66%, 93.33% {
+    transform: translateY(-200%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.animate-carousel {
+  animation: carousel 8s infinite;
 }
 
 .outline-text {
@@ -127,4 +152,18 @@
 
 .section-container {
   @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24;
+}
+
+/* Glowing animation */
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(139, 92, 246, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(37, 99, 235, 0.5);
+  }
+}
+
+.animate-glow {
+  animation: glow 3s ease-in-out infinite;
 }

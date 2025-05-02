@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { ThemeToggle } from "@/components/ThemeToggle";
@@ -32,7 +31,6 @@ const Header = () => {
     { name: "About", href: "#about" },
     { name: "Projects", href: "#projects" },
     { name: "Experience", href: "#experience" },
-    { name: "Blog", href: "#blog" },
     { name: "Contact", href: "#contact" },
   ];
 
