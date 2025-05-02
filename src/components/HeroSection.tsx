@@ -1,12 +1,22 @@
 
 import { Button } from "@/components/ui/button";
 import { Github, Linkedin, Download } from "lucide-react";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const HeroSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
-
+  const [displayedTitle, setDisplayedTitle] = useState("Full Stack Developer");
+  const titles = ["Full Stack Developer", "Software Engineer", "Problem Solver"];
+  
   useEffect(() => {
+    // Cycle through titles
+    let index = 0;
+    const interval = setInterval(() => {
+      index = (index + 1) % titles.length;
+      setDisplayedTitle(titles[index]);
+    }, 3000);
+    
+    // Scroll reveal animation
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -25,6 +35,7 @@ const HeroSection = () => {
 
     return () => {
       revealElements.forEach((el) => observer.unobserve(el));
+      clearInterval(interval);
     };
   }, []);
 
@@ -60,16 +71,8 @@ const HeroSection = () => {
             </h1>
             
             <div className="h-16 mb-8 reveal">
-              <div className="flex flex-col animate-carousel">
-                <div className="h-16 flex items-center text-2xl md:text-3xl font-bold text-gray-700 dark:text-gray-300">
-                  Full Stack Developer
-                </div>
-                <div className="h-16 flex items-center text-2xl md:text-3xl font-bold text-gray-700 dark:text-gray-300">
-                  Software Engineer
-                </div>
-                <div className="h-16 flex items-center text-2xl md:text-3xl font-bold text-gray-700 dark:text-gray-300">
-                  Problem Solver
-                </div>
+              <div className="text-2xl md:text-3xl font-bold text-gray-700 dark:text-gray-300 fade-in-up">
+                <span className="inline-block min-h-[35px]">{displayedTitle}</span>
               </div>
             </div>
             
