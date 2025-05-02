@@ -57,17 +57,15 @@ const HeroSection = () => {
         <div className="lg:col-span-7 z-10">
           <div className="max-w-3xl">
             <div className="inline-block px-3 py-1 mb-6 text-sm font-medium bg-gradient-to-r from-accent1/10 to-accent2/10 border border-accent1/20 rounded-full reveal">
-              <span className="bg-gradient-to-r from-accent1 to-accent2 bg-clip-text text-transparent">Hello, I'm Manthan Khamkar</span>
+              <span className="bg-gradient-to-r from-accent1 to-accent2 bg-clip-text text-transparent">Hello, I'm </span>
             </div>
             
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight reveal">
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-gray-300">
-                Crafting Digital
-              </span>
+MANTHAN              </span>
               <br />
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-accent1 to-accent2">
-                Experiences & Solutions
-              </span>
+KHAMKAR              </span>
             </h1>
             
             <div className="h-16 mb-8 reveal">
@@ -113,7 +111,7 @@ const HeroSection = () => {
               </a>
               <div className="h-8 w-px bg-gray-300 dark:bg-gray-700"></div>
               <a
-                href="/resume.pdf"
+                href="public\MANTHAN_RESUME (1).pdf"
                 download
                 className="flex items-center gap-2 text-gray-700 dark:text-gray-300 hover:text-accent1 dark:hover:text-accent1 transition-all"
               >

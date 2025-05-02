@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -146,11 +145,11 @@ const ProjectsSection = () => {
           </div>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredProjects.map((project) => (
             <div
               key={project.id}
-              className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col h-full reveal"
+              className="glass-card overflow-hidden rounded-xl transition-all duration-300 hover:shadow-xl hover:shadow-accent1/20 reveal fade-in-up"
             >
               <div className="relative overflow-hidden h-48">
                 <img
@@ -165,51 +164,78 @@ const ProjectsSection = () => {
                 </div>
               </div>
               
-              <div className="p-4 flex-grow">
-                <p className="text-gray-600 dark:text-gray-400 mb-4">
+              <div className="p-6">
+                <p className="text-muted-foreground mb-4">
                   {project.description}
                 </p>
                 
-                <div className="mb-4">
-                  <h4 className="font-semibold mb-2">Key Features</h4>
-                  <ul className="list-disc list-inside text-sm text-gray-600 dark:text-gray-400 space-y-1">
+                <div className="mb-6">
+                  <h4 className="font-semibold mb-2 text-foreground">Key Features</h4>
+                  <ul className="list-none space-y-2">
                     {project.features.map((feature, index) => (
-                      <li key={index}>{feature}</li>
+                      <li key={index} className="flex items-start gap-2 text-sm text-muted-foreground">
+                        <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-accent1 shrink-0"></span>
+                        <span>{feature}</span>
+                      </li>
                     ))}
                   </ul>
                 </div>
                 
-                <div className="flex flex-wrap gap-2 mb-4">
+                <div className="flex flex-wrap gap-2 mb-6">
                   {project.tags.map((tag) => (
-                    <Badge key={tag} variant="outline" className="bg-gray-100 dark:bg-gray-700 font-normal">
+                    <Badge key={tag} variant="outline" className="bg-secondary/50 hover:bg-secondary font-normal">
                       {tag}
                     </Badge>
                   ))}
                 </div>
-              </div>
-              
-              <div className="border-t border-gray-200 dark:border-gray-700 p-4 flex justify-between">
-                <a
-                  href={project.githubLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-gray-600 hover:text-primary dark:text-gray-400 dark:hover:text-white flex items-center gap-1 theme-transition"
-                >
-                  <Github className="h-4 w-4" />
-                  <span>Code</span>
-                </a>
-                <a
-                  href={project.demoLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-accent1 hover:text-accent2 flex items-center gap-1 theme-transition"
-                >
-                  <span>Live Demo</span>
-                  <ExternalLink className="h-4 w-4" />
-                </a>
+
+                <div className="flex items-center gap-4">
+                  <a
+                    href={project.githubLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 text-muted-foreground hover:text-accent1 transition-colors"
+                  >
+                    <Github className="h-4 w-4" />
+                    <span className="text-sm">View Code</span>
+                  </a>
+                  <a
+                    href={project.demoLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 text-accent1 hover:text-accent2 transition-colors"
+                  >
+                    <ExternalLink className="h-4 w-4" />
+                    <span className="text-sm">Live Demo</span>
+                  </a>
+                </div>
               </div>
             </div>
           ))}
+        </div>
+
+        {/* View All Projects Box */}
+        <div className="mt-12 reveal fade-in-up">
+          <a
+            href="https://github.com/Manthankk"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="glass-card block p-8 rounded-xl transition-all duration-300 hover:shadow-xl hover:shadow-accent1/20 group"
+          >
+            <div className="flex flex-col items-center text-center">
+              <div className="w-16 h-16 mb-4 rounded-full bg-gradient-to-br from-accent1/20 to-accent2/20 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                <Github className="w-8 h-8 text-accent1" />
+              </div>
+              <h3 className="text-2xl font-bold mb-2 gradient-text">View All Projects</h3>
+              <p className="text-muted-foreground mb-4 max-w-md">
+                Explore more of my work on GitHub, including open-source contributions and personal projects.
+              </p>
+              <div className="flex items-center gap-2 text-accent1 group-hover:text-accent2 transition-colors">
+                <span className="font-medium">Visit GitHub</span>
+                <ExternalLink className="w-4 h-4" />
+              </div>
+            </div>
+          </a>
         </div>
       </div>
     </section>

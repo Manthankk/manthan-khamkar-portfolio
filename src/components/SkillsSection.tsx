@@ -1,27 +1,8 @@
-
 import { useEffect, useRef, useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { Code, Database, Layers, GitBranch, Terminal, Cloud } from "lucide-react";
-import {
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent
-} from "@/components/ui/chart";
-import {
-  AreaChart,
-  Area,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  ResponsiveContainer,
-  Tooltip,
-  PolarGrid,
-  PolarAngleAxis,
-  PolarRadiusAxis,
-  Radar,
-  RadarChart,
-} from "recharts";
+import { Code, Database, Terminal, Cloud, ArrowRight, Sparkles } from "lucide-react";
+import { motion } from "framer-motion";
 
 const SkillsSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -34,17 +15,6 @@ const SkillsSection = () => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add("active");
-            
-            // Animate skill bars when in view
-            if (entry.target.classList.contains("skill-bar-container")) {
-              const skillBar = entry.target.querySelector(".skill-bar");
-              if (skillBar) {
-                // Cast to HTMLElement to access style property
-                const skillBarElement = skillBar as HTMLElement;
-                const width = skillBarElement.style.width;
-                skillBarElement.style.setProperty('--width', width);
-              }
-            }
           }
         });
       },
@@ -54,62 +24,36 @@ const SkillsSection = () => {
     const revealElements = document.querySelectorAll(".reveal");
     revealElements.forEach((el) => observer.observe(el));
 
-    const skillBars = document.querySelectorAll(".skill-bar-container");
-    skillBars.forEach((el) => observer.observe(el));
-
     return () => {
       revealElements.forEach((el) => observer.unobserve(el));
-      skillBars.forEach((el) => observer.unobserve(el));
     };
   }, []);
 
   const frontendSkills = [
-    { name: "React", level: 90, color: "#61DAFB" },
-    { name: "Angular", level: 85, color: "#DD0031" },
-    { name: "JavaScript", level: 88, color: "#F7DF1E" },
-    { name: "TypeScript", level: 85, color: "#3178C6" },
-    { name: "HTML/CSS", level: 92, color: "#E34F26" },
-    { name: "Tailwind CSS", level: 88, color: "#06B6D4" },
+    { name: "React", level: 90, color: "#61DAFB", icon: "⚛️", description: "Building modern, responsive UIs with React ecosystem" },
+    { name: "Angular", level: 85, color: "#DD0031", icon: "🅰️", description: "Enterprise-grade applications with Angular" },
+    { name: "JavaScript", level: 88, color: "#F7DF1E", icon: "📜", description: "Advanced JavaScript and modern ES6+ features" },
+    { name: "TypeScript", level: 85, color: "#3178C6", icon: "📘", description: "Type-safe development with TypeScript" },
+    { name: "HTML/CSS", level: 92, color: "#E34F26", icon: "🎨", description: "Semantic HTML and modern CSS techniques" },
+    { name: "Tailwind CSS", level: 88, color: "#06B6D4", icon: "🎯", description: "Utility-first CSS framework for rapid development" },
   ];
 
   const backendSkills = [
-    { name: "Node.js", level: 85, color: "#3C873A" },
-    { name: "Express", level: 80, color: "#000000" },
-    { name: "Python", level: 75, color: "#3776AB" },
-    { name: "MongoDB", level: 80, color: "#47A248" },
-    { name: "SQL", level: 75, color: "#00758F" },
-    { name: "GraphQL", level: 70, color: "#E10098" },
+    { name: "Node.js", level: 85, color: "#3C873A", icon: "🟢", description: "Server-side JavaScript with Node.js" },
+    { name: "Express", level: 80, color: "#000000", icon: "⚡", description: "Fast, unopinionated web framework" },
+    { name: "Python", level: 75, color: "#3776AB", icon: "🐍", description: "Python for backend and automation" },
+    { name: "MongoDB", level: 80, color: "#47A248", icon: "🍃", description: "NoSQL database expertise" },
+    { name: "SQL", level: 75, color: "#00758F", icon: "🗄️", description: "Relational database management" },
+    { name: "GraphQL", level: 70, color: "#E10098", icon: "📊", description: "Modern API query language" },
   ];
 
   const devopsSkills = [
-    { name: "Git", level: 88, color: "#F05032" },
-    { name: "Docker", level: 70, color: "#2496ED" },
-    { name: "AWS", level: 65, color: "#FF9900" },
-    { name: "CI/CD", level: 75, color: "#40AF40" },
-    { name: "Linux", level: 80, color: "#FCC624" },
-    { name: "Kubernetes", level: 60, color: "#326CE5" },
-  ];
-
-  const tools = [
-    "Git", "Docker", "AWS", "VSCode", "Cursor", "Postman", "Kafka", "Jenkins"
-  ];
-
-  const radarData = [
-    { subject: 'Frontend', A: 90, fullMark: 100 },
-    { subject: 'Backend', A: 85, fullMark: 100 },
-    { subject: 'DevOps', A: 75, fullMark: 100 },
-    { subject: 'Database', A: 80, fullMark: 100 },
-    { subject: 'UI/UX', A: 70, fullMark: 100 },
-    { subject: 'Testing', A: 78, fullMark: 100 },
-  ];
-
-  // Growth data for area chart
-  const growthData = [
-    { name: '2020', Frontend: 60, Backend: 50, DevOps: 40 },
-    { name: '2021', Frontend: 70, Backend: 65, DevOps: 50 },
-    { name: '2022', Frontend: 75, Backend: 70, DevOps: 60 },
-    { name: '2023', Frontend: 85, Backend: 80, DevOps: 70 },
-    { name: '2024', Frontend: 90, Backend: 85, DevOps: 75 },
+    { name: "Git", level: 88, color: "#F05032", icon: "📚", description: "Version control and collaboration" },
+    { name: "Docker", level: 70, color: "#2496ED", icon: "🐳", description: "Containerization and deployment" },
+    { name: "AWS", level: 65, color: "#FF9900", icon: "☁️", description: "Cloud infrastructure and services" },
+    { name: "CI/CD", level: 75, color: "#40AF40", icon: "🔄", description: "Continuous Integration and Deployment" },
+    { name: "Linux", level: 80, color: "#FCC624", icon: "🐧", description: "System administration and automation" },
+    { name: "Kubernetes", level: 60, color: "#326CE5", icon: "⚓", description: "Container orchestration" },
   ];
 
   const skillsByCategory = {
@@ -125,9 +69,9 @@ const SkillsSection = () => {
   };
 
   const categoryLabels = {
-    frontend: "Frontend",
+    frontend: "Frontend Development",
     backend: "Backend & Databases",
-    devops: "DevOps & Tools"
+    devops: "DevOps & Infrastructure"
   };
 
   return (
@@ -147,11 +91,11 @@ const SkillsSection = () => {
       <div className="section-container">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-5xl font-bold mb-4 reveal fade-in-up">
-            Technical <span className="gradient-text">Skills</span>
+            Technical <span className="gradient-text">Expertise</span>
           </h2>
           <div className="h-1 w-24 bg-gradient-to-r from-accent1 to-accent2 mx-auto mb-6 reveal scale-in-animation"></div>
           <p className="text-muted-foreground max-w-2xl mx-auto reveal">
-            My expertise spans various technologies and tools, allowing me to build complete, efficient solutions.
+            Crafting digital experiences with cutting-edge technologies and modern development practices.
           </p>
         </div>
 
@@ -161,7 +105,7 @@ const SkillsSection = () => {
             <button
               key={key}
               onClick={() => setActiveCategory(key)}
-              className={`px-4 py-2 rounded-full flex items-center gap-2 transition-all duration-300 ${
+              className={`px-6 py-3 rounded-xl flex items-center gap-3 transition-all duration-300 ${
                 activeCategory === key 
                   ? "bg-gradient-to-r from-accent1 to-accent2 text-white shadow-lg scale-105" 
                   : "bg-secondary hover:bg-secondary/80 text-foreground"
@@ -173,165 +117,78 @@ const SkillsSection = () => {
           ))}
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
-          {/* Skill Bars */}
-          <div className="glass-card p-8 rounded-2xl h-full reveal fade-in-up" style={{ animationDelay: '200ms' }}>
-            <h3 className="text-xl font-bold mb-8 gradient-text inline-flex items-center gap-2">
-              {categoryIcons[activeCategory as keyof typeof categoryIcons]}
-              <span>{categoryLabels[activeCategory as keyof typeof categoryLabels]} Skills</span>
-            </h3>
-            
-            <div className="space-y-8">
-              {skillsByCategory[activeCategory as keyof typeof skillsByCategory].map((skill, index) => (
-                <div 
-                  key={skill.name} 
-                  className="mb-2 skill-bar-container reveal-delay"
-                  style={{ animationDelay: `${index * 150}ms` }}
-                  onMouseEnter={() => setHoverSkill(skill.name)}
-                  onMouseLeave={() => setHoverSkill(null)}
-                >
-                  <div className="flex justify-between mb-2">
-                    <span className="font-medium flex items-center gap-2">
-                      {skill.name}
-                    </span>
-                    <span className="text-accent1">{skill.level}%</span>
-                  </div>
-                  <div className="w-full h-3 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden relative">
-                    <div
-                      className={`h-full rounded-full skill-bar transition-all duration-1000 ${
-                        hoverSkill === skill.name ? "animate-pulse" : ""
-                      }`}
-                      style={{ 
-                        width: `${skill.level}%`,
-                        background: `linear-gradient(90deg, ${skill.color}aa, ${skill.color})`,
-                      }}
-                    >
-                      <div className="absolute inset-0 bg-gradient-to-r from-transparent to-white/20 rounded-full"></div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Radar Chart */}
-          <div className="glass-card p-8 rounded-2xl h-full reveal fade-in-up" style={{ animationDelay: '400ms' }}>
-            <h3 className="text-xl font-bold mb-8 gradient-text flex items-center gap-2">
-              <GitBranch className="h-5 w-5" />
-              <span>Skill Distribution</span>
-            </h3>
-            
-            <div className="h-[300px] w-full">
-              <ChartContainer 
-                config={{
-                  Frontend: { theme: { light: '#8B5CF6', dark: '#8B5CF6' } },
-                  Backend: { theme: { light: '#2563EB', dark: '#2563EB' } },
-                  DevOps: { theme: { light: '#10B981', dark: '#10B981' } },
-                  Database: { theme: { light: '#F59E0B', dark: '#F59E0B' } },
-                  "UI/UX": { theme: { light: '#EC4899', dark: '#EC4899' } },
-                  Testing: { theme: { light: '#6366F1', dark: '#6366F1' } }
-                }}
-              >
-                <RadarChart outerRadius={90} width={500} height={300} data={radarData}>
-                  <PolarGrid stroke="rgba(255,255,255,0.2)" />
-                  <PolarAngleAxis dataKey="subject" tick={{ fill: "var(--foreground)", fontSize: 11 }} />
-                  <PolarRadiusAxis angle={30} domain={[0, 100]} />
-                  <Radar 
-                    name="Skills" 
-                    dataKey="A" 
-                    stroke="#8B5CF6" 
-                    fill="#8B5CF6" 
-                    fillOpacity={0.6} 
-                    animationDuration={1500}
-                  />
-                  <Tooltip content={<ChartTooltipContent />} />
-                </RadarChart>
-              </ChartContainer>
-            </div>
-          </div>
-        </div>
-        
-        {/* Growth Timeline Chart */}
-        <div className="glass-card p-8 rounded-2xl mb-16 reveal fade-in-up" style={{ animationDelay: '600ms' }}>
-          <h3 className="text-xl font-bold mb-8 gradient-text flex items-center gap-2">
-            <Layers className="h-5 w-5" />
-            <span>Skill Growth Timeline</span>
-          </h3>
-          
-          <div className="h-[300px] w-full">
-            <ChartContainer
-              config={{
-                Frontend: { theme: { light: '#8B5CF6', dark: '#8B5CF6' } },
-                Backend: { theme: { light: '#2563EB', dark: '#2563EB' } },
-                DevOps: { theme: { light: '#10B981', dark: '#10B981' } }
-              }}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+          {skillsByCategory[activeCategory as keyof typeof skillsByCategory].map((skill, index) => (
+            <motion.div
+              key={skill.name}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: index * 0.1 }}
+              className="group relative"
             >
-              <AreaChart
-                data={growthData}
-                margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
+              <div 
+                className="glass-card p-6 rounded-xl h-full transition-all duration-300 hover:shadow-xl hover:shadow-accent1/20"
+                onMouseEnter={() => setHoverSkill(skill.name)}
+                onMouseLeave={() => setHoverSkill(null)}
               >
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
-                <XAxis dataKey="name" tick={{ fill: "var(--foreground)" }} />
-                <YAxis tick={{ fill: "var(--foreground)" }} />
-                <ChartTooltip content={<ChartTooltipContent />} />
-                <Area 
-                  type="monotone" 
-                  dataKey="Frontend" 
-                  stackId="1"
-                  stroke="#8B5CF6" 
-                  fill="#8B5CF6" 
-                  fillOpacity={0.6}
-                  animationDuration={1500}
-                />
-                <Area 
-                  type="monotone" 
-                  dataKey="Backend" 
-                  stackId="1"
-                  stroke="#2563EB" 
-                  fill="#2563EB" 
-                  fillOpacity={0.6}
-                  animationDuration={1500}
-                  animationBegin={300}
-                />
-                <Area 
-                  type="monotone" 
-                  dataKey="DevOps" 
-                  stackId="1"
-                  stroke="#10B981" 
-                  fill="#10B981" 
-                  fillOpacity={0.6}
-                  animationDuration={1500}
-                  animationBegin={600}
-                />
-              </AreaChart>
-            </ChartContainer>
-          </div>
+                <div className="flex items-start justify-between mb-4">
+                  <div className="flex items-center gap-3">
+                    <span className="text-2xl">{skill.icon}</span>
+                    <h3 className="text-lg font-semibold">{skill.name}</h3>
+                  </div>
+                  <span className="text-accent1 font-medium">{skill.level}%</span>
+                </div>
+                
+                <p className="text-sm text-muted-foreground mb-4">{skill.description}</p>
+                
+                <div className="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                  <motion.div
+                    className="h-full rounded-full"
+                    initial={{ width: 0 }}
+                    animate={{ width: `${skill.level}%` }}
+                    transition={{ duration: 1, delay: index * 0.1 }}
+                    style={{ 
+                      background: `linear-gradient(90deg, ${skill.color}aa, ${skill.color})`,
+                    }}
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent to-white/20 rounded-full"></div>
+                  </motion.div>
+                </div>
+
+                <div className="absolute inset-0 bg-gradient-to-r from-accent1/5 to-accent2/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity -z-10"></div>
+              </div>
+            </motion.div>
+          ))}
         </div>
-        
+
         {/* Tools & Ecosystem */}
-        <div className="glass-card p-8 rounded-2xl reveal fade-in-up" style={{ animationDelay: '800ms' }}>
-          <div className="flex items-start space-x-4 mb-6">
+        <div className="glass-card p-8 rounded-2xl reveal fade-in-up">
+          <div className="flex items-center gap-3 mb-8">
             <div className="p-3 rounded-xl bg-gradient-to-br from-accent1/20 to-accent2/20 text-accent1">
-              <Cloud className="h-6 w-6" />
+              <Sparkles className="h-6 w-6" />
             </div>
-            <h3 className="text-xl font-bold gradient-text">Tools & Ecosystem</h3>
+            <h3 className="text-xl font-bold gradient-text">Development Tools & Ecosystem</h3>
           </div>
           
-          <div className="flex flex-wrap gap-4 justify-center">
-            {tools.map((tool, index) => (
-              <div 
-                key={tool} 
-                className="group relative p-6 bg-secondary/50 hover:bg-secondary rounded-xl transition-all duration-300 transform hover:scale-105 hover:shadow-lg reveal-delay flex flex-col items-center"
-                style={{ animationDelay: `${index * 100}ms` }}
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+            {["Git", "Docker", "AWS", "VSCode", "Cursor", "Postman", "Kafka", "Jenkins"].map((tool, index) => (
+              <motion.div
+                key={tool}
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.3, delay: index * 0.1 }}
+                className="group relative"
               >
-                <div className="w-12 h-12 mb-3 flex items-center justify-center bg-gradient-to-br from-accent1/20 to-accent2/20 rounded-full">
-                  <span className="text-xl font-bold bg-gradient-to-r from-accent1 to-accent2 bg-clip-text text-transparent">
-                    {tool.charAt(0)}
-                  </span>
+                <div className="p-4 bg-secondary/50 hover:bg-secondary rounded-xl transition-all duration-300 transform hover:scale-105 hover:shadow-lg flex items-center gap-3">
+                  <div className="w-8 h-8 flex items-center justify-center bg-gradient-to-br from-accent1/20 to-accent2/20 rounded-lg">
+                    <span className="text-sm font-bold bg-gradient-to-r from-accent1 to-accent2 bg-clip-text text-transparent">
+                      {tool.charAt(0)}
+                    </span>
+                  </div>
+                  <span className="font-medium text-sm">{tool}</span>
+                  <ArrowRight className="w-4 h-4 text-accent1 opacity-0 group-hover:opacity-100 transition-opacity" />
                 </div>
-                <span className="font-medium">{tool}</span>
-                <div className="absolute -inset-0.5 bg-gradient-to-r from-accent1 to-accent2 rounded-xl opacity-0 group-hover:opacity-30 transition-opacity -z-10"></div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
