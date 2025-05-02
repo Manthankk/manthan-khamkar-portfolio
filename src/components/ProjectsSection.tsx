@@ -191,7 +191,7 @@ const ProjectsSection = () => {
 
                 <div className="flex items-center gap-4">
                   <a
-                    href={project.githubLink}
+                    href={"https://github.com/Manthankk/KnowCode-25"}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center gap-2 text-muted-foreground hover:text-accent1 transition-colors"
@@ -201,7 +201,7 @@ const ProjectsSection = () => {
                   </a>
                   <a
                     href={project.demoLink}
-                    target="_blank"
+                    target="https://github.com/Manthankk/KnowCode-25"
                     rel="noopener noreferrer"
                     className="flex items-center gap-2 text-accent1 hover:text-accent2 transition-colors"
                   >
